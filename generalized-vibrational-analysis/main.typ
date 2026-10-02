@@ -71,10 +71,7 @@
 == Part I: Linear Algebra on a Metric Space
 // ============================================================================
 
-_Goal:_ establish vectors, covectors, the metric, and projection operators with no reference to coordinates or physics.
-Raising and lowering indices arise naturally as the way the metric turns vectors into covectors.
-
-=== A single space
+_Goal:_ establish vectors, covectors, the metric, and projection operators within a general metric space.
 
 #definition(
   [
@@ -122,23 +119,36 @@ Raising and lowering indices arise naturally as the way the metric turns vectors
   ],
   title: "Lowering in components",
   proof: [
-      By @def:lowering and bilinearity,
-      $v_i = bold(v)^flat (bold(e)_i) = physica.iprod(v^j bold(e)_j, bold(e)_i) = G_(j i) v^j = G_(i j) v^j$.
-      Then, by @def:vectors-and-covectors,
-      $physica.iprod(bold(v), bold(w)) = bold(v)^flat (bold(w)) = v_i w^i$.
+    By @def:vectors-and-covectors and @def:lowering, we have
+    $physica.iprod(bold(v), bold(w)) = bold(v)^flat (bold(w)) = bold(v)^flat (bold(e)_i) w^i = v_i w^i$,
+    which proves the second result.
+    Comparing this with @def:metric implies the first result.
   ],
 ) <prop:lowering-in-components>
 
 #proposition(
   [
-    The map $flat: V -> V^*$ is a linear bijection.
+    The lowering operation, $flat: V -> V^*$, is a linear and invertible mapping.
   ],
   title: "Lowering is invertible",
   proof: [
-      Linearity follows from bilinearity of the metric.
-      If $bold(v)^flat = bold(0)$, then $physica.iprod(bold(v), bold(v)) = bold(v)^flat (bold(v)) = 0$,
-      so $bold(v) = bold(0)$ by positive-definiteness.
-      Hence $flat$ is injective, and since $dim V^* = dim V = n$, it is also surjective.
+    Linearity follows from bilinearity of the inner product:
+    given an arbitrary linear combination,
+    $bold(v) = c^I bold(v)_I$,
+    the inner product satisfies
+    $physica.iprod(bold(v), bold(w)) = c^I physica.iprod(bold(v)_I, bold(w))$,
+    which implies $bold(v)^flat = c^I bold(v)_I^flat$.
+    To prove invertibility, first note that _only_ the zero vector maps to the zero-covector:
+    $bold(v)^flat = bold(0)
+    arrow.double physica.iprod(bold(v), bold(v)) = bold(v)^flat (bold(v)) = 0
+    arrow.double bold(v) = bold(0)$.
+    It therefore follows that the mapping is one-to-one:
+    $bold(v)^flat = bold(w)^flat
+    arrow.double bold(v)^flat - bold(w)^flat = (bold(v) - bold(w))^flat = bold(0)
+    arrow.double bold(v) - bold(w) = bold(0)
+    arrow.double bold(v) = bold(w)
+    $.
+    This proves the result, because a one-to-one linear mapping between spaces of equal dimension is automatically invertible.
   ],
 ) <prop:lowering-is-invertible>
 
@@ -149,7 +159,13 @@ Raising and lowering indices arise naturally as the way the metric turns vectors
     Its components are written $alpha^i equiv (bold(alpha)^sharp)^i$,
     and the _contravariant metric_ $G^(i j)$ is defined as the component matrix of $sharp$:
     $
-    alpha^i = G^(i j) alpha_j.
+    alpha^i = G^(i j) alpha_j
+    quad quad
+    physica.iprod(bold(alpha), bold(beta))
+    =
+    bold(beta)(bold(alpha)^sharp)
+    =
+    alpha^i beta_i
     $
   ],
   title: "Raising",
