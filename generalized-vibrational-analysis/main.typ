@@ -154,22 +154,25 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
 
 #definition(
   [
-    The _raising_ (sharp) map $sharp: V^* -> V$ is the inverse of $flat$:
-    $bold(alpha)^sharp$ is the unique vector with $(bold(alpha)^sharp)^flat = bold(alpha)$.
-    Its components are written $alpha^i equiv (bold(alpha)^sharp)^i$,
-    and the _contravariant metric_ $G^(i j)$ is defined as the component matrix of $sharp$:
-    $
-    alpha^i = G^(i j) alpha_j
-    quad quad
-    physica.iprod(bold(alpha), bold(beta))
-    =
-    bold(beta)(bold(alpha)^sharp)
-    =
-    alpha^i beta_i
-    $
+    The _raising_ (sharp) map $sharp: V^* -> V$ is the inverse of $flat$.
+    Given a vector $bold(v)$ which maps to a co-vector $bold(alpha) = bold(v)^flat$ upon lowering,
+    raising maps the co-vector $bold(alpha)$ back to the vector, $bold(alpha)^sharp = bold(v)$.
+    Its componetns are written $alpha^i equiv (bold(alpha)^sharp)^i$.
   ],
   title: "Raising",
 ) <def:raising>
+
+#definition(
+  [
+    The raised components of a covector are $alpha^i equiv (bold(alpha)^sharp)^i$.
+    Since $sharp$ is linear (as the inverse of the linear map $flat$, @prop:lowering-is-invertible),
+    they are linear in the components $alpha_j$, and the _contravariant metric_ $G^(i j)$ is the matrix relating them:
+    $
+    alpha^i = G^(i j) alpha_j.
+    $
+  ],
+  title: "Contravariant metric",
+) <def:contravariant-metric>
 
 #lemma(
   [
@@ -182,7 +185,7 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
   ],
   title: "Co- and contravariant metrics",
   proof: [
-      For every covector, @def:raising and @prop:lowering-in-components give
+      For every covector, @def:raising, @def:contravariant-metric, and @prop:lowering-in-components give
       $alpha_i = ((bold(alpha)^sharp)^flat)_i = G_(i j) alpha^j = G_(i j) G^(j k) alpha_k$.
       Since $bold(alpha)$ is arbitrary, $G_(i j) G^(j k) = delta^k_i$,
       so $G^(i j)$ is the matrix inverse of $G_(i j)$, which is also its left inverse.
@@ -217,12 +220,13 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
   ],
   title: "Covector inner product in components",
   proof: [
-      By @def:covector-inner-product, @prop:lowering-in-components, and @lem:co-and-contravariant-metrics,
+      By @def:covector-inner-product, @def:lowering, @def:raising, and @def:contravariant-metric,
       $physica.iprod(bold(alpha), bold(beta))
-      = G_(k l) alpha^k beta^l
-      = G^(i k) G_(k l) G^(l j) alpha_i beta_j
-      = G^(i j) alpha_i beta_j
-      = alpha_i beta^i$.
+      = physica.iprod(bold(alpha)^sharp, bold(beta)^sharp)
+      = (bold(alpha)^sharp)^flat (bold(beta)^sharp)
+      = bold(alpha)(bold(beta)^sharp)
+      = alpha_i beta^i
+      = G^(i j) alpha_i beta_j$.
       The second identity follows from @rem:dual-consistency:
       $physica.iprod(bold(v)^flat, bold(w)^flat)
       = physica.iprod((bold(v)^flat)^sharp, (bold(w)^flat)^sharp)
