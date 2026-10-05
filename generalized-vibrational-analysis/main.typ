@@ -276,6 +276,44 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
 
 #definition(
   [
+    A linear map $bold(P): V -> V$ also acts _to the left_ on covectors,
+    $bold(beta) bold(P) equiv bold(beta) compose bold(P)$, with components
+    $(bold(beta) bold(P))_j = beta_i P^i_j$.
+    For an orthogonal projector, self-adjointness means that $bold(P)$ commutes with lowering and raising:
+    $
+    (bold(P) bold(v))^flat = bold(v)^flat bold(P)
+    quad quad
+    (bold(beta) bold(P))^sharp = bold(P) bold(beta)^sharp
+    quad arrow.double.l.r quad
+    G_(i k) P^k_j = P^k_i G_(k j).
+    $
+    Acting to the left, $bold(P)$ is therefore an orthogonal projector on $V^*$,
+    with respect to the covector inner product, onto the lowered image of its range.
+    In particular,
+    $
+    bold(beta) bold(P)_bold(alpha)
+    = frac(physica.iprod(bold(beta), bold(alpha)), physica.iprod(bold(alpha), bold(alpha))) bold(alpha)
+    $
+    is the component of $bold(beta)$ parallel to $bold(alpha)$,
+    and $bold(beta) bold(Q)_bold(alpha)$ is the component orthogonal to it.
+  ],
+  title: "Projectors acting to the left",
+  proof: [
+    For any $bold(w)$,
+    $(bold(P) bold(v))^flat (bold(w))
+    = physica.iprod(bold(P) bold(v), bold(w))
+    = physica.iprod(bold(v), bold(P) bold(w))
+    = bold(v)^flat (bold(P) bold(w))
+    = (bold(v)^flat bold(P))(bold(w))$.
+    Setting $bold(v) = bold(beta)^sharp$ and raising both sides gives the second relation.
+    The rest follows because $flat$ and $sharp$ carry idempotency and self-adjointness between $V$ and $V^*$
+    (@def:raising), and because $bold(beta) bold(P)_bold(alpha) = (bold(P)_bold(alpha) bold(beta)^sharp)^flat$
+    (@cor:projection-of-covectors).
+  ],
+) <def:projector-acting-left>
+
+#definition(
+  [
     The projection of a bilinear form $H_(i j)$ by an orthogonal projector $bold(P)$ is
     $H(bold(P) bold(v), bold(P) bold(w))$, with components
     $
