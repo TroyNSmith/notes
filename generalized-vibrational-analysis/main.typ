@@ -100,17 +100,19 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
 
 #definition(
   [
-    The _lowering_ (flat) of a vector $bold(v)$ is the covector
+    The _lowering_ ("flat") of a vector $bold(v)$ is the covector
     $bold(v)^flat equiv physica.iprod(bold(v), dot)$,
     i.e. $bold(v)^flat (bold(w)) = physica.iprod(bold(v), bold(w))$.
-    The components of a lowered vector satisfy the following relationships:
+    The components of a lowered vector are therefore given by
+    $v_i
+    equiv (bold(v)^flat)_i = G_(i j) v^j
+    $,
+    where the covariant metric $G_(i j)$ acts as the transformation matrix of the lowering operation, $flat: V -> V^*$.
+    Note that
     $
-    v_i equiv (bold(v)^flat)_i = G_(i j) v^j
-    quad quad
-    physica.iprod(bold(v), bold(w)) = v_i w^i
+    physica.iprod(bold(v), bold(w)) = G_(i j) v^i w^j = v_i w^i thin ,
     $
-    The covariant metric $G_(i j)$ is therefore the matrix of the lowering map,
-    and the inner product is the simple contraction of two vectors with one of them lowered.
+    i.e. the contraction of one vector with the lowered version of another is equal to their inner product.
   ],
   title: "Lowering",
   proof: [
@@ -151,62 +153,44 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
     The _raising_ (sharp) map $sharp: V^* -> V$ is the inverse of $flat$.
     Given a vector $bold(v)$ which maps to a co-vector $bold(alpha) equiv bold(v)^flat$ upon lowering,
     raising maps the covector image $bold(alpha)$ back to the original vector, $bold(alpha)^sharp = bold(v)$.
-    Since $sharp$ is linear (as the inverse of a linear map, @prop:lowering-is-invertible),
-    it has a matrix, the _contravariant metric_ $G^(i j)$:
+    The components of a raised covector are given by
+    $alpha^i equiv (bold(alpha)^sharp)^i = G^(i j) alpha_j$,
+    where the transformation matrix for raising, $G^(i j)$, must be the inverse of the transformation matrix for lowering, $G_(i j)$.
     $
-    alpha^i equiv (bold(alpha)^sharp)^i = G^(i j) alpha_j.
+      G^(i k) G_(k j) = G_(j k) G^(k i) = delta^i_j,
     $
-    The contravariant metric is the matrix inverse of the covariant metric,
+    As the inverse of a symmetric positive-definite matrix, $G^(i j)$ is also symmetric and positive-definite and thus also a valid metric.
+    This _contravariant metric_ allows us to define the inner product of covectors as
     $
-    G^(i k) G_(k j) = G_(j k) G^(k i) = delta^i_j,
+    physica.iprod(bold(beta), bold(alpha))
+    equiv G^(i j) beta_i alpha_j
+    = beta_i alpha^i
     $
-    and the inner product of covectors is
-    $physica.iprod(bold(beta), bold(alpha)) equiv physica.iprod(bold(beta)^sharp, bold(alpha)^sharp)$.
+    which is consistent with
+    $physica.iprod(bold(beta), bold(alpha))
+    equiv physica.iprod(bold(beta)^sharp, bold(alpha)^sharp)$.
+    Note that, by definition,
+    $(bold(v)^flat)^sharp = bold(v)$ and $(bold(alpha)^sharp)^flat = bold(alpha)$.
   ],
   title: "Raising",
   proof: [
-    In components, $bold(alpha) = bold(v)^flat$ and $bold(v) = bold(alpha)^sharp$ read
-    $alpha_k = G_(k j) v^j$ (@def:lowering) and $v^i = G^(i k) alpha_k$.
-    Substituting the first into the second gives $v^i = G^(i k) G_(k j) v^j$ for every $bold(v)$,
-    so $G^(i k) G_(k j) = delta^i_j$.
-    Substituting the second into the first gives $alpha_j = G_(j k) G^(k i) alpha_i$ for every $bold(alpha)$,
-    so $G_(j k) G^(k i) = delta^i_j$.
-  ],
+    $(bold(v)^flat)^sharp = bold(v)$ and $(bold(alpha)^sharp)^flat = bold(alpha)$
+    follow directly from the fact that $sharp$ and $flat$ are inverses of each other.
+    This necessarily also implies that their transformation matrices are inverses,
+    and all of the other results follow from this.
+    However, it is instructive to demonstrate this in one case to see the algebraic consistency.
+    If $bold(alpha)$ is the covector image of some arbitrary vector $bold(v)$ under $flat$,
+    then
+    $bold(alpha) = bold(v)^flat
+    arrow.double alpha_k = G_(k j) v^j$
+    and
+    $bold(v) = bold(alpha)^sharp
+    arrow.double v^i = G^(i k) alpha_k$.
+    Substituting the first into the second gives $v^i = G^(i k) G_(k j) v^j$,
+    which is the component equivalent of $bold(v) = (bold(v)^flat)^sharp$
+    and implies that $G^(i k) G_(k j) = delta^i_j$.
+  ]
 ) <def:raising>
-
-#lemma(
-  [
-    By construction, $(bold(v)^flat)^sharp = bold(v)$ and $(bold(alpha)^sharp)^flat = bold(alpha)$.
-    The position of an index therefore tells us which object a component belongs to,
-    and we write $v_i$ and $alpha^i$ freely.
-    The covector inner product is a contraction with the contravariant metric,
-    and lowering preserves inner products:
-    $
-    physica.iprod(bold(beta), bold(alpha)) = G^(i j) beta_i alpha_j = beta_i alpha^i
-    quad quad
-    physica.iprod(bold(v)^flat, bold(w)^flat) = physica.iprod(bold(v), bold(w)).
-    $
-    Moreover, $G^(i j)$ is itself a metric: it is symmetric and positive-definite.
-  ],
-  title: "Dual consistency",
-  proof: [
-    By @def:raising, @def:lowering, and @def:vectors-and-covectors,
-    $physica.iprod(bold(beta), bold(alpha))
-    = physica.iprod(bold(beta)^sharp, bold(alpha)^sharp)
-    = (bold(beta)^sharp)^flat (bold(alpha)^sharp)
-    = bold(beta)(bold(alpha)^sharp)
-    = beta_i alpha^i
-    = G^(i j) beta_i alpha_j$.
-    The left-hand side is symmetric in $bold(alpha)$ and $bold(beta)$, so $G^(i j) = G^(j i)$,
-    and for $bold(alpha) != bold(0)$,
-    $G^(i j) alpha_i alpha_j = physica.iprod(bold(alpha)^sharp, bold(alpha)^sharp) > 0$
-    since $bold(alpha)^sharp != bold(0)$.
-    Finally,
-    $physica.iprod(bold(v)^flat, bold(w)^flat)
-    = physica.iprod((bold(v)^flat)^sharp, (bold(w)^flat)^sharp)
-    = physica.iprod(bold(v), bold(w))$.
-  ],
-) <lem:dual-consistency>
 
 #definition(
   [
@@ -280,8 +264,10 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
       = physica.iprod(bold(alpha)^sharp, bold(P) bold(beta)^sharp)
       = physica.iprod(bold(alpha), bold(beta) bold(P))$.
       Finally, $bold(P)_bold(alpha) equiv bold(P)_(bold(alpha)^sharp)$ from @thm:projection-onto-a-vector
-      has components $alpha^i alpha_j slash physica.iprod(bold(alpha), bold(alpha))$ by @lem:dual-consistency and @def:raising,
-      and $beta_i alpha^i = physica.iprod(bold(alpha), bold(beta))$ by @lem:dual-consistency.
+      has components $alpha^i alpha_j slash physica.iprod(bold(alpha), bold(alpha))$
+      by @def:raising,
+      and $beta_i alpha^i = physica.iprod(bold(alpha), bold(beta))$
+      by @def:raising.
   ],
 ) <cor:projection-of-covectors>
 
@@ -346,14 +332,14 @@ and Latin indices $i, j, k, l$ refer to a space $W$ of dimension $m <= n$.
   ],
   title: "Induced metric in components",
   proof: [
-      By @def:linear-map-and-pullback and @lem:dual-consistency,
+      By @def:linear-map-and-pullback and @def:raising,
       $physica.iprod(bold(beta), bold(gamma))_W = G^(mu nu) (beta_i L^i_mu) (gamma_j L^j_nu) = G^(i j) beta_i gamma_j$.
       Symmetry follows from that of $G^(mu nu)$.
       For $bold(beta) != bold(0)$, $bold(L)^* bold(beta) != bold(0)$ by @prop:pullback-injective,
       so $G^(i j) beta_i beta_j = physica.iprod(bold(L)^* bold(beta), bold(L)^* bold(beta))_V > 0$.
       A symmetric positive-definite matrix has a symmetric positive-definite inverse $G_(i j)$, which is therefore a metric on $W$.
-      By @def:raising its raising matrix is $G^(i j)$,
-      so by @lem:dual-consistency it reproduces the induced covector inner product.
+      By @def:raising its raising matrix $G^(i j)$,
+      reproduces the induced covector inner product.
   ],
 ) <prop:induced-metric-in-components>
 
