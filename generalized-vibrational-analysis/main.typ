@@ -153,43 +153,40 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
     The _raising_ (sharp) map $sharp: V^* -> V$ is the inverse of $flat$.
     Given a vector $bold(v)$ which maps to a co-vector $bold(alpha) equiv bold(v)^flat$ upon lowering,
     raising maps the covector image $bold(alpha)$ back to the original vector, $bold(alpha)^sharp = bold(v)$.
+    Note that, by definition,
+    $(bold(v)^flat)^sharp = bold(v)$ and $(bold(alpha)^sharp)^flat = bold(alpha)$
+    since these mappings are inverses of each other.
     The components of a raised covector are given by
     $alpha^i equiv (bold(alpha)^sharp)^i = G^(i j) alpha_j$,
-    where the transformation matrix for raising, $G^(i j)$, must be the inverse of the transformation matrix for lowering, $G_(i j)$.
+    where the transformation matrix for raising, $G^(i j)$,
+    must be the inverse of the transformation matrix for lowering, $G_(i j)$,
+    since $sharp$ is the inverse of $flat$:#footnote[
+      _Exercise:_
+      Show this by translating 
+      $bold(alpha) = bold(v)^flat$
+      and
+      $bold(v) = bold(alpha)^sharp$
+      into components and substituting one into the other.
+    ]
     $
       G^(i k) G_(k j) = G_(j k) G^(k i) = delta^i_j,
     $
-    As the inverse of a symmetric positive-definite matrix, $G^(i j)$ is also symmetric and positive-definite and thus also a valid metric.
-    This _contravariant metric_ allows us to define the inner product of covectors as
+    This implies that $G^(i j)$ is also symmetric and positive-definite and thus also a valid metric.
+    This _contravariant metric_ serves as a metric for the dual space $V^*$, where the inner product of covectors can be defined as
     $
     physica.iprod(bold(beta), bold(alpha))
     equiv G^(i j) beta_i alpha_j
-    = beta_i alpha^i
+    = beta_i alpha^i thin .
     $
-    which is consistent with
+    Note that the two inner products are consistent with each other:
+    $physica.iprod(bold(v), bold(w))
+    = physica.iprod(bold(v)^flat, bold(w)^flat)
+    $
+    and
     $physica.iprod(bold(beta), bold(alpha))
-    equiv physica.iprod(bold(beta)^sharp, bold(alpha)^sharp)$.
-    Note that, by definition,
-    $(bold(v)^flat)^sharp = bold(v)$ and $(bold(alpha)^sharp)^flat = bold(alpha)$.
+    = physica.iprod(bold(beta)^sharp, bold(alpha)^sharp)$.
   ],
   title: "Raising",
-  proof: [
-    $(bold(v)^flat)^sharp = bold(v)$ and $(bold(alpha)^sharp)^flat = bold(alpha)$
-    follow directly from the fact that $sharp$ and $flat$ are inverses of each other.
-    This necessarily also implies that their transformation matrices are inverses,
-    and all of the other results follow from this.
-    However, it is instructive to demonstrate this in one case to see the algebraic consistency.
-    If $bold(alpha)$ is the covector image of some arbitrary vector $bold(v)$ under $flat$,
-    then
-    $bold(alpha) = bold(v)^flat
-    arrow.double alpha_k = G_(k j) v^j$
-    and
-    $bold(v) = bold(alpha)^sharp
-    arrow.double v^i = G^(i k) alpha_k$.
-    Substituting the first into the second gives $v^i = G^(i k) G_(k j) v^j$,
-    which is the component equivalent of $bold(v) = (bold(v)^flat)^sharp$
-    and implies that $G^(i k) G_(k j) = delta^i_j$.
-  ]
 ) <def:raising>
 
 #definition(
