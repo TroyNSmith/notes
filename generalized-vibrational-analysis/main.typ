@@ -190,6 +190,9 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
   title: "Raising",
 ) <def:raising>
 
+
+=== Projection
+
 #definition(
   [
     An _orthogonal projector_ is a linear map $bold(P): V -> V$,
@@ -207,64 +210,67 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
 
 #theorem(
   [
-    For $bold(v) != bold(0)$, the orthogonal projector onto $"span"{bold(v)}$ is
+    For $bold(v) != bold(0)$, the orthogonal projector onto $"span"{bold(v)} subset V$ is given by
     $
-    bold(P)_bold(v) = frac(bold(v) times.o bold(v)^flat, physica.iprod(bold(v), bold(v)))
-    quad quad
+    bold(P)_bold(v)
+    = frac(bold(v) times.o bold(v)^flat, physica.iprod(bold(v), bold(v)))
+    quad arrow.double.l.r quad
     (bold(P)_bold(v))^i_j = frac(v^i v_j, physica.iprod(bold(v), bold(v)))
-    quad quad
-    bold(P)_bold(v) bold(w) = bold(v) frac(physica.iprod(bold(v), bold(w)), physica.iprod(bold(v), bold(v))),
     $
     and $bold(Q)_bold(v) = bold(1) - bold(P)_bold(v)$ is the orthogonal projector onto the orthogonal complement of $bold(v)$.
   ],
   title: "Projection onto a vector",
   proof: [
-      Let $N = physica.iprod(bold(v), bold(v)) > 0$.
-      By @def:lowering,
-      $(bold(P)_bold(v) bold(w))^i = v^i v_j w^j slash N = v^i physica.iprod(bold(v), bold(w)) slash N$,
-      which is the third form.
-      Since $bold(P)_bold(v) bold(v) = bold(v)$, the range is $"span"{bold(v)}$ and
-      $bold(P)_bold(v)^2 bold(w) = bold(P)_bold(v) bold(v) physica.iprod(bold(v), bold(w)) slash N = bold(P)_bold(v) bold(w)$.
-      It is self-adjoint because
-      $physica.iprod(bold(P)_bold(v) bold(w), bold(u)) = physica.iprod(bold(v), bold(w)) physica.iprod(bold(v), bold(u)) slash N$
-      is symmetric in $bold(w)$ and $bold(u)$.
-      For the complement, $bold(Q)_bold(v)^2 = bold(1) - 2 bold(P)_bold(v) + bold(P)_bold(v)^2 = bold(Q)_bold(v)$ and $bold(Q)_bold(v)$ is self-adjoint.
-      Its range is orthogonal to $bold(v)$, since
-      $physica.iprod(bold(v), bold(Q)_bold(v) bold(w)) = physica.iprod(bold(v), bold(w)) - physica.iprod(bold(v), bold(w)) = 0$,
-      and $bold(Q)_bold(v) bold(w) = bold(w)$ whenever $physica.iprod(bold(v), bold(w)) = 0$.
+    The equivalence of expressions follows from @def:lowering.
+    Note that $hfrac(bold(v), physica.iprod(bold(v), bold(v))) = bold(e)_bold(v)$
+    is a unit vector in the direction of $bold(v)$.
+    Therefore,
+    $bold(P)_bold(v) bold(w)
+    = frac(bold(v), physica.iprod(bold(v), bold(v))) physica.iprod(bold(v), bold(w))
+    = bold(e)_bold(v) physica.iprod(bold(v), bold(w))
+    = bold(w)_parallel
+    $
+    is the component of $bold(w)$ parallel to $bold(v)$.
+    Therefore,
+    $bold(Q)_bold(v) bold(w)
+    = bold(w) - bold(w)_parallel
+    = bold(w)_perp
+    $
+    is the component of $bold(w)$ orthogonal to $bold(v)$.
+    So, these transformations do indeed map onto $"span"{bold(v)}$ and its orthogonal complement,
+    respectively.
+    Idempotency follows from
+    $bold(P)_bold(v)^2 bold(w)
+    = bold(P)_bold(v) bold(w)_parallel = bold(w)_parallel = bold(P)_bold(v) bold(w)$
+    and
+    $bold(Q)_bold(v)^2 bold(w)
+    = bold(Q)_bold(v) bold(w)_perp = bold(w)_perp = bold(Q)_bold(v) bold(w)$.
+    Self-adjointness follows from
+    $physica.iprod(bold(P)_bold(v) bold(w), bold(u))
+    = frac(
+      physica.iprod(bold(v), bold(w)) physica.iprod(bold(v), bold(u)),
+      physica.iprod(bold(v), bold(v))
+    )
+    = physica.iprod(bold(w), bold(P)_bold(v) bold(u))
+    $.
   ],
 ) <thm:projection-onto-a-vector>
 
 #corollary(
   [
-    An orthogonal projector $bold(P)$ acts on covectors from the right,
-    $(bold(alpha) bold(P))_j equiv alpha_i P^i_j$
-    (i.e. $bold(alpha) bold(P) = bold(alpha) compose bold(P)$),
-    and this is an orthogonal projector on $V^*$ with respect to the covector inner product,
-    satisfying $(bold(P) bold(v))^flat = bold(v)^flat bold(P)$.
-    In particular, for $bold(alpha) != bold(0)$, the projector onto $"span"{bold(alpha)}$ is
+    For $bold(alpha) != bold(0)$,
+    the orthogonal projector onto $"span"{bold(alpha)^sharp} subset V$ is given by
     $
-    (bold(P)_bold(alpha))^i_j = frac(alpha^i alpha_j, physica.iprod(bold(alpha), bold(alpha)))
-    quad quad
-    bold(beta) bold(P)_bold(alpha) = bold(alpha) frac(physica.iprod(bold(alpha), bold(beta)), physica.iprod(bold(alpha), bold(alpha))).
+      bold(P)_(bold(alpha))
+      = frac(bold(alpha)^sharp times.o bold(alpha), physica.iprod(bold(alpha), bold(alpha)))
+      quad arrow.double.l.r quad
+      (bold(P)_bold(alpha))^i_j = frac(alpha^i alpha_j, physica.iprod(bold(alpha), bold(alpha)))
     $
+    and $bold(Q)_bold(alpha) = bold(1) - bold(P)_bold(alpha)$ is the orthogonal projector onto the orthogonal complement of $bold(alpha)^sharp$.
   ],
-  title: "Projection of covectors",
+  title: "Projection onto a covector",
   proof: [
-      Comparing $physica.iprod(bold(P) bold(v), bold(w)) = G_(k i) P^i_l v^l w^k$
-      with $physica.iprod(bold(v), bold(P) bold(w)) = G_(l i) v^l P^i_k w^k$,
-      self-adjointness reads $G_(k i) P^i_l = G_(l i) P^i_k$.
-      Hence $((bold(P) bold(v))^flat)_j = G_(j i) P^i_l v^l = G_(l i) v^l P^i_j = v_i P^i_j = (bold(v)^flat bold(P))_j$.
-      Idempotence is immediate: $bold(alpha) bold(P) bold(P) = bold(alpha) bold(P)^2 = bold(alpha) bold(P)$.
-      Taking $bold(v) = bold(alpha)^sharp$ in the identity above gives $(bold(alpha) bold(P))^sharp = bold(P) bold(alpha)^sharp$, so
-      $physica.iprod(bold(alpha) bold(P), bold(beta))
-      = physica.iprod(bold(P) bold(alpha)^sharp, bold(beta)^sharp)
-      = physica.iprod(bold(alpha)^sharp, bold(P) bold(beta)^sharp)
-      = physica.iprod(bold(alpha), bold(beta) bold(P))$.
-      Finally, $bold(P)_bold(alpha) equiv bold(P)_(bold(alpha)^sharp)$ from @thm:projection-onto-a-vector
-      has components $alpha^i alpha_j slash physica.iprod(bold(alpha), bold(alpha))$,
-      and $beta_i alpha^i = physica.iprod(bold(alpha), bold(beta))$,
-      by @def:raising.
+    This follows by substituting $bold(v) = bold(alpha)^sharp$ into @thm:projection-onto-a-vector.
   ],
 ) <cor:projection-of-covectors>
 
