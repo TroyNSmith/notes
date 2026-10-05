@@ -151,11 +151,10 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
 #definition(
   [
     The _raising_ (sharp) map $sharp: V^* -> V$ is the inverse of $flat$.
-    Given a vector $bold(v)$ which maps to a co-vector $bold(alpha) equiv bold(v)^flat$ upon lowering,
+    Given a vector $bold(v)$ which maps to a covector $bold(alpha) equiv bold(v)^flat$ upon lowering,
     raising maps the covector image $bold(alpha)$ back to the original vector, $bold(alpha)^sharp = bold(v)$.
-    Note that, by definition,
-    $(bold(v)^flat)^sharp = bold(v)$ and $(bold(alpha)^sharp)^flat = bold(alpha)$
-    since these mappings are inverses of each other.
+    Since these mappings are inverses of each other,
+    $(bold(v)^flat)^sharp = bold(v)$ and $(bold(alpha)^sharp)^flat = bold(alpha)$.
     The components of a raised covector are given by
     $alpha^i equiv (bold(alpha)^sharp)^i = G^(i j) alpha_j$,
     where the transformation matrix for raising, $G^(i j)$,
@@ -169,9 +168,9 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
       into components and substituting one into the other.
     ]
     $
-      G^(i k) G_(k j) = G_(j k) G^(k i) = delta^i_j,
+      G^(i k) G_(k j) = G_(j k) G^(k i) = delta^i_j thin .
     $
-    This implies that $G^(i j)$ is also symmetric and positive-definite and thus also a valid metric.
+    As the inverse of a symmetric positive-definite matrix, $G^(i j)$ is also symmetric and positive-definite and thus also a valid metric.
     This _contravariant metric_ serves as a metric for the dual space $V^*$, where the inner product of covectors can be defined as
     $
     physica.iprod(bold(beta), bold(alpha))
@@ -184,7 +183,9 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
     $
     and
     $physica.iprod(bold(beta), bold(alpha))
-    = physica.iprod(bold(beta)^sharp, bold(alpha)^sharp)$.
+    = physica.iprod(bold(beta)^sharp, bold(alpha)^sharp)$.#footnote[
+      _Exercise:_ Verify this.
+    ]
   ],
   title: "Raising",
 ) <def:raising>
@@ -261,9 +262,8 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
       = physica.iprod(bold(alpha)^sharp, bold(P) bold(beta)^sharp)
       = physica.iprod(bold(alpha), bold(beta) bold(P))$.
       Finally, $bold(P)_bold(alpha) equiv bold(P)_(bold(alpha)^sharp)$ from @thm:projection-onto-a-vector
-      has components $alpha^i alpha_j slash physica.iprod(bold(alpha), bold(alpha))$
-      by @def:raising,
-      and $beta_i alpha^i = physica.iprod(bold(alpha), bold(beta))$
+      has components $alpha^i alpha_j slash physica.iprod(bold(alpha), bold(alpha))$,
+      and $beta_i alpha^i = physica.iprod(bold(alpha), bold(beta))$,
       by @def:raising.
   ],
 ) <cor:projection-of-covectors>
@@ -335,7 +335,7 @@ and Latin indices $i, j, k, l$ refer to a space $W$ of dimension $m <= n$.
       For $bold(beta) != bold(0)$, $bold(L)^* bold(beta) != bold(0)$ by @prop:pullback-injective,
       so $G^(i j) beta_i beta_j = physica.iprod(bold(L)^* bold(beta), bold(L)^* bold(beta))_V > 0$.
       A symmetric positive-definite matrix has a symmetric positive-definite inverse $G_(i j)$, which is therefore a metric on $W$.
-      By @def:raising its raising matrix $G^(i j)$,
+      By @def:raising, its raising matrix $G^(i j)$
       reproduces the induced covector inner product.
   ],
 ) <prop:induced-metric-in-components>
