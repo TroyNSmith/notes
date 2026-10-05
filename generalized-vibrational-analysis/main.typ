@@ -324,121 +324,14 @@ _Goal:_ establish vectors, covectors, the metric, and projection operators withi
 ) <def:projection-of-a-bilinear-form>
 
 
-=== Linear maps between two spaces
-
-From here on, Greek indices $mu, nu, rho, sigma$ refer to a space $V$ of dimension $n$
-and Latin indices $i, j, k, l$ refer to a space $W$ of dimension $m <= n$.
-
-#definition(
-  [
-    A linear map $bold(L): V -> W$ has components $(bold(L) bold(v))^i = L^i_mu v^mu$.
-    Its _pullback_ (transpose) $bold(L)^*: W^* -> V^*$ is
-    $bold(L)^* bold(beta) equiv bold(beta) compose bold(L)$,
-    with components $(bold(L)^* bold(beta))_mu = beta_i L^i_mu$.
-  ],
-  title: "Linear map and pullback",
-) <def:linear-map-and-pullback>
-
-#proposition(
-  [
-    If $bold(L)$ is surjective, then $bold(L)^*$ is injective.
-  ],
-  title: "Pullback of a surjection is injective",
-  proof: [
-      If $bold(L)^* bold(beta) = bold(0)$, then $bold(beta)(bold(L) bold(v)) = 0$ for all $bold(v) in V$.
-      Since $bold(L)$ is surjective, $bold(beta)(bold(w)) = 0$ for all $bold(w) in W$, so $bold(beta) = bold(0)$.
-  ],
-) <prop:pullback-injective>
-
-#definition(
-  [
-    Given a metric on $V$ and a surjective $bold(L): V -> W$,
-    the _induced_ covector inner product on $W^*$ is
-    $
-    physica.iprod(bold(beta), bold(gamma))_W equiv physica.iprod(bold(L)^* bold(beta), bold(L)^* bold(gamma))_V.
-    $
-    The induced metric on $W$ is the one whose raising and lowering reproduce this covector inner product.
-  ],
-  title: "Induced metric",
-) <def:induced-metric>
-
-#proposition(
-  [
-    The induced contravariant metric
-    $
-    G^(i j) = L^i_mu L^j_nu G^(mu nu)
-    $
-    is symmetric and positive-definite.
-    Its inverse $G_(i j)$ is therefore the induced (covariant) metric on $W$.
-  ],
-  title: "Induced metric in components",
-  proof: [
-      By @def:linear-map-and-pullback and @def:raising,
-      $physica.iprod(bold(beta), bold(gamma))_W = G^(mu nu) (beta_i L^i_mu) (gamma_j L^j_nu) = G^(i j) beta_i gamma_j$.
-      Symmetry follows from that of $G^(mu nu)$.
-      For $bold(beta) != bold(0)$, $bold(L)^* bold(beta) != bold(0)$ by @prop:pullback-injective,
-      so $G^(i j) beta_i beta_j = physica.iprod(bold(L)^* bold(beta), bold(L)^* bold(beta))_V > 0$.
-      A symmetric positive-definite matrix has a symmetric positive-definite inverse $G_(i j)$, which is therefore a metric on $W$.
-      By @def:raising, its raising matrix $G^(i j)$
-      reproduces the induced covector inner product.
-  ],
-) <prop:induced-metric-in-components>
-
-#theorem(
-  [
-    Let $bold(L): V -> W$ be surjective and equip $W$ with the induced metric.
-    Define $bold(A): W -> V$ by $bold(A) equiv sharp_V compose bold(L)^* compose flat_W$, i.e.
-    $
-    A^mu_i = G^(mu nu) L^k_nu G_(k i).
-    $
-    Then:
-    (a) $bold(L) bold(A) = bold(1)_W$, i.e. $L^i_mu A^mu_j = delta^i_j$;
-    (b) $bold(A) bold(L)$ is the orthogonal projector on $V$ onto $(ker bold(L))^perp$;
-    (c) $bold(A) bold(w)$ is the unique vector of minimum norm with $bold(L) bold(v) = bold(w)$;
-    (d) $physica.iprod(bold(A) bold(w), bold(A) bold(w)') _V = physica.iprod(bold(w), bold(w)')_W$.
-  ],
-  title: "Minimum-norm lift",
-  proof: [
-      First, for any $bold(v), bold(u) in V$,
-      $physica.iprod(bold(A) bold(L) bold(v), bold(u))_V
-      = G_(mu rho) G^(mu nu) L^k_nu G_(k i) L^i_sigma v^sigma u^rho
-      = G_(k i) (bold(L) bold(u))^k (bold(L) bold(v))^i
-      = physica.iprod(bold(L) bold(v), bold(L) bold(u))_W$. $(dagger)$
-      (a) $L^i_mu A^mu_j = L^i_mu L^k_nu G^(mu nu) G_(k j) = G^(i k) G_(k j) = delta^i_j$ by @prop:induced-metric-in-components.
-      (b) Let $bold(P) = bold(A) bold(L)$.
-      By (a), $bold(P)^2 = bold(A) (bold(L) bold(A)) bold(L) = bold(P)$, and by $(dagger)$, $bold(P)$ is self-adjoint.
-      Also by (a), $bold(L) bold(P) = bold(L)$, so $bold(P) bold(v) = bold(0)$ if and only if $bold(L) bold(v) = bold(0)$, i.e. $ker bold(P) = ker bold(L)$.
-      The range of a self-adjoint projector is the orthogonal complement of its kernel
-      (if $bold(P) bold(u) = bold(0)$, then $physica.iprod(bold(P) bold(v), bold(u)) = physica.iprod(bold(v), bold(P) bold(u)) = 0$, and the dimensions add to $n$).
-      (c) $bold(L) bold(A) bold(w) = bold(w)$ by (a).
-      If $bold(L) bold(v) = bold(w)$, then $bold(P) bold(v) = bold(A) bold(w)$,
-      so $bold(v) = bold(A) bold(w) + (bold(1) - bold(P)) bold(v)$ is an orthogonal decomposition by (b) and
-      $physica.iprod(bold(v), bold(v))_V = physica.iprod(bold(A) bold(w), bold(A) bold(w))_V + physica.iprod((bold(1) - bold(P)) bold(v), (bold(1) - bold(P)) bold(v))_V$,
-      which is minimized only by $bold(v) = bold(A) bold(w)$.
-      (d) By (a) and $(dagger)$,
-      $physica.iprod(bold(A) bold(w), bold(A) bold(w)')_V
-      = physica.iprod(bold(A) bold(L) bold(A) bold(w), bold(A) bold(w)')_V
-      = physica.iprod(bold(L) bold(A) bold(w), bold(L) bold(A) bold(w)')_W
-      = physica.iprod(bold(w), bold(w)')_W$.
-  ],
-) <thm:minimum-norm-lift>
-
-#remark(
-  [
-    $bold(A)$ is simply $bold(L)$ with both of its indices moved by the metrics.
-    When $m = n$, $bold(A) = bold(L)^(-1)$ and $bold(A) bold(L) = bold(1)_V$.
-  ],
-  title: "Interpretation of the lift",
-) <rem:interpretation-of-the-lift>
-
-
 // ============================================================================
 #pagebreak()
 == Part II: Coordinates and Derivatives
 // ============================================================================
 
 _Goal:_ show that coordinate displacements are vectors and derivatives are covectors,
-so that the machinery of Part I applies to them.
+so that the machinery of Part I applies to them,
+and show how a metric on one set of coordinates carries over to another.
 
 #definition(
   [
@@ -460,7 +353,9 @@ so that the machinery of Part I applies to them.
     quad quad
     C^i_(mu nu) equiv physica.pdv(q^i, q^mu, q^nu) = C^i_(nu mu).
     $
-    We assume $B^i_mu$ has full row rank at the reference point, so that $bold(B)$ is surjective.
+    Greek indices $mu, nu, rho, sigma$ label the original coordinates and Latin indices $i, j, k, l$ label the new ones.
+    We write $V$ and $W$ for the spaces of displacements $dif q^mu$ and $dif q^i$.
+    We assume $B^i_mu$ has full row rank at the reference point, so that $bold(B): V -> W$ is surjective.
   ],
   title: "Coordinate map",
 ) <def:coordinate-map>
@@ -484,12 +379,17 @@ so that the machinery of Part I applies to them.
     $
     physica.pdv(f, q^mu) = physica.pdv(f, q^i) B^i_mu,
     $
-    i.e. $dif f$ in the $q^mu$ coordinates is the pullback $bold(B)^*$ of $dif f$ in the $q^i$ coordinates.
+    i.e. $dif f$ in the $q^mu$ coordinates is $dif f$ in the $q^i$ coordinates acting to the left on $bold(B)$
+    (cf. @def:projector-acting-left).
+    More generally, $bold(B)$ _pulls back_ any covector $bold(beta) in W^*$ to
+    $bold(beta) bold(B) equiv bold(beta) compose bold(B) in V^*$, with components $beta_i B^i_mu$,
+    and $bold(beta) bold(B) = bold(0)$ only if $bold(beta) = bold(0)$.
   ],
   title: "Gradients pull back",
   proof: [
       This is the chain rule applied to $f(q^i (q^mu))$.
-      The components of the pullback are given in @def:linear-map-and-pullback.
+      If $bold(beta) bold(B) = bold(0)$, then $bold(beta)(bold(B) bold(v)) = 0$ for all $bold(v) in V$,
+      and since $bold(B)$ is surjective, every $bold(w) in W$ is some $bold(B) bold(v)$, so $bold(beta) = bold(0)$.
   ],
 ) <prop:gradients-pull-back>
 
@@ -522,6 +422,68 @@ so that the machinery of Part I applies to them.
       where $partial B^k_mu slash partial q^nu = C^k_(mu nu)$.
   ],
 ) <prop:second-derivatives>
+
+
+=== Metrics in new coordinates
+
+Suppose now that the displacements $dif q^mu$ carry a metric $G_(mu nu)$.
+
+#definition(
+  [
+    The _induced metric_ on $W$ is the one under which covectors, such as gradients,
+    keep their inner product when pulled back:
+    $physica.iprod(bold(beta), bold(gamma))_W equiv physica.iprod(bold(beta) bold(B), bold(gamma) bold(B))_V$, i.e.
+    $
+    G^(i j) equiv B^i_mu B^j_nu G^(mu nu),
+    $
+    with covariant metric $G_(i j)$ given by its inverse.
+  ],
+  title: "Induced metric",
+  proof: [
+    $G^(i j)$ is symmetric because $G^(mu nu)$ is, and it is positive-definite because
+    $G^(i j) beta_i beta_j = physica.iprod(bold(beta) bold(B), bold(beta) bold(B))_V > 0$ for $bold(beta) != bold(0)$,
+    since then $bold(beta) bold(B) != bold(0)$ (@prop:gradients-pull-back).
+    It is therefore a valid metric on $W^*$, and its inverse is a metric on $W$ (@def:raising).
+  ],
+) <def:induced-metric>
+
+#theorem(
+  [
+    Let $W$ carry the metric induced by $bold(B)$, and define the _lift_ $bold(A): W -> V$ by
+    $bold(A) bold(w) equiv ((bold(w)^flat) bold(B))^sharp$, i.e.
+    $
+    A^mu_i = G^(mu nu) B^k_nu G_(k i).
+    $
+    Then:
+    (a) $bold(B) bold(A) = bold(1)_W$;
+    (b) $bold(A) bold(B)$ is the orthogonal projector onto $(ker bold(B))^perp$,
+    and $bold(A)$ maps $W$ one-to-one onto $(ker bold(B))^perp$;
+    (c) $physica.iprod(bold(A) bold(w), bold(A) bold(w)')_V = physica.iprod(bold(w), bold(w)')_W$.
+    When $m = n$, $bold(A) = bold(B)^(-1)$.
+  ],
+  title: "Lift",
+  proof: [
+      First, for any $bold(v), bold(u) in V$,
+      $physica.iprod(bold(A) bold(B) bold(v), bold(u))_V
+      = G_(mu rho) G^(mu nu) B^k_nu G_(k i) B^i_sigma v^sigma u^rho
+      = G_(k i) (bold(B) bold(u))^k (bold(B) bold(v))^i
+      = physica.iprod(bold(B) bold(v), bold(B) bold(u))_W$. $(dagger)$
+      (a) $B^i_mu A^mu_j = B^i_mu B^k_nu G^(mu nu) G_(k j) = G^(i k) G_(k j) = delta^i_j$ by @def:induced-metric.
+      (b) Let $bold(P) = bold(A) bold(B)$.
+      By (a), $bold(P)^2 = bold(A) (bold(B) bold(A)) bold(B) = bold(P)$, and by $(dagger)$, $bold(P)$ is self-adjoint.
+      Also by (a), $bold(B) bold(P) = bold(B)$, so $bold(P) bold(v) = bold(0)$ if and only if $bold(B) bold(v) = bold(0)$, i.e. $ker bold(P) = ker bold(B)$.
+      The range of a self-adjoint projector is the orthogonal complement of its kernel
+      (if $bold(P) bold(u) = bold(0)$, then $physica.iprod(bold(P) bold(v), bold(u)) = physica.iprod(bold(v), bold(P) bold(u)) = 0$, and the dimensions add to $n$).
+      By (a), $bold(A)$ is one-to-one, and since $bold(A) = bold(P) bold(A)$ and $bold(P) = bold(A) bold(B)$,
+      its range is the range of $bold(P)$.
+      (c) By (a) and $(dagger)$,
+      $physica.iprod(bold(A) bold(w), bold(A) bold(w)')_V
+      = physica.iprod(bold(A) bold(B) bold(A) bold(w), bold(A) bold(w)')_V
+      = physica.iprod(bold(B) bold(A) bold(w), bold(B) bold(A) bold(w)')_W
+      = physica.iprod(bold(w), bold(w)')_W$.
+      When $m = n$, (a) makes $bold(A)$ the inverse of $bold(B)$.
+  ],
+) <thm:lift>
 
 
 // ============================================================================
@@ -577,8 +539,8 @@ _Goal:_ identify the kinetic energy as the metric, and apply Part I to Cartesian
   proof: [
       The map $q^mu -> tilde(q)^mu$ is linear and invertible, with Jacobian $m_((mu))^(1/2) delta^mu_nu$.
       For an invertible map, the induced metric is the same inner product expressed in the new components
-      (@thm:minimum-norm-lift (d) with $bold(A) = bold(L)^(-1)$),
-      so @prop:induced-metric-in-components and @prop:contravariant-cartesian-metric give
+      (@thm:lift (c) with $bold(A) = bold(B)^(-1)$),
+      so @def:induced-metric and @prop:contravariant-cartesian-metric give
       $tilde(G)^(mu nu) = m_((mu))^(1/2) m_((nu))^(1/2) m_((mu))^(-1) delta^(mu nu) = delta^(mu nu)$,
       whose inverse is $tilde(G)_(mu nu) = delta_(mu nu)$.
       As a check, $T = 1/2 sum_mu m_((mu)) (dot(q)^mu)^2 = 1/2 sum_mu (dot(tilde(q))^mu)^2$.
@@ -614,7 +576,7 @@ _Goal:_ identify the kinetic energy as the metric, and apply Part I to Cartesian
   proof: [
       By @prop:displacements-push-forward, displacements map as $dif q^i = tilde(B)^i_mu dif tilde(q)^mu$,
       and $tilde(bold(B))$ is surjective (@def:internal-coordinates).
-      @prop:induced-metric-in-components with $L^i_mu = tilde(B)^i_mu$ and @prop:mass-weighted-metric give the first form.
+      @def:induced-metric with $B^i_mu = tilde(B)^i_mu$ and @prop:mass-weighted-metric give the first form.
       For the second, $q^nu = m_((nu))^(-1/2) tilde(q)^nu$ and @prop:gradients-pull-back give
       $tilde(B)^i_mu = m_((mu))^(-1/2) B^i_mu$.
   ],
@@ -632,7 +594,7 @@ _Goal:_ identify the kinetic energy as the metric, and apply Part I to Cartesian
   ],
   title: "A-matrix",
   proof: [
-      Apply @thm:minimum-norm-lift (a) and (b) with $bold(L) = tilde(bold(B))$ and $G^(mu nu) = delta^(mu nu)$ (@prop:mass-weighted-metric).
+      Apply @thm:lift (a) and (b) with $bold(B) = tilde(bold(B))$ and $G^(mu nu) = delta^(mu nu)$ (@prop:mass-weighted-metric).
       Each $q^i$ is invariant to overall translation and rotation,
       so its derivative along an infinitesimal translation or rotation vanishes and these lie in $ker tilde(bold(B))$.
       By rank-nullity, $dim ker tilde(bold(B)) = 3N - M$,
@@ -654,7 +616,7 @@ _Goal:_ identify the kinetic energy as the metric, and apply Part I to Cartesian
       By @prop:displacements-push-forward, $dot(q)^i = tilde(B)^i_mu dot(tilde(q))^mu$.
       If $dot(tilde(bold(q))) perp ker tilde(bold(B))$, then
       $dot(tilde(bold(q))) = tilde(bold(A)) tilde(bold(B)) dot(tilde(bold(q))) = tilde(bold(A)) dot(bold(q))'$ by @cor:a-matrix,
-      and by @thm:minimum-norm-lift (d),
+      and by @thm:lift (c),
       $T
       = 1/2 physica.iprod(dot(tilde(bold(q))), dot(tilde(bold(q))))
       = 1/2 physica.iprod(tilde(bold(A)) dot(bold(q))', tilde(bold(A)) dot(bold(q))')
@@ -761,10 +723,10 @@ and project the gradient direction out of the Hessian.
       $delta^(mu rho) K_(rho nu) tilde(A)^nu_j u^j = delta^(mu rho) tilde(B)^k_rho H_(k j) u^j$
       and
       $tilde(A)^mu_i u^i = delta^(mu rho) tilde(B)^k_rho G_(k i) u^i$.
-      Since $tilde(bold(B))^*$ is injective (@prop:pullback-injective),
+      Since $bold(beta) tilde(bold(B)) = bold(0)$ only if $bold(beta) = bold(0)$ (@prop:gradients-pull-back),
       $bold(K) tilde(bold(A)) bold(u)' = lambda tilde(bold(A)) bold(u)'$ if and only if $H_(k j) u^j = lambda G_(k i) u^i$,
       i.e. $G^(i k) H_(k j) u^j = lambda u^i$.
-      By @thm:minimum-norm-lift, $tilde(bold(A))$ maps internal displacements bijectively onto $(ker tilde(bold(B)))^perp$,
+      By @thm:lift (b), $tilde(bold(A))$ maps internal displacements bijectively onto $(ker tilde(bold(B)))^perp$,
       so the two eigenproblems are equivalent.
       At a stationary point, $g_k = 0$ and $K_(mu nu) = tilde(H)_(mu nu)$.
   ],
